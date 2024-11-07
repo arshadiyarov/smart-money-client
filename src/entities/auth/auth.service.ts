@@ -7,14 +7,30 @@ import {
 
 class AuthService {
   async signUp({ ...payload }: SignUpPayload) {
-    const res = await axiosClient.post<AuthResponse>("/auth/sign-up", payload);
+    try {
+      const res = await axiosClient.post<AuthResponse>(
+        "/auth/sign-up",
+        payload,
+      );
 
-    return res.data;
+      return res.data;
+    } catch {
+      throw new Error("Can't sign up");
+    }
   }
 
   async signIn({ ...payload }: SignInPayload) {
-    const res = await axiosClient.post<AuthResponse>("/auth/sign-in", payload);
+    try {
+      const res = await axiosClient.post<AuthResponse>(
+        "/auth/sign-in",
+        payload,
+      );
 
-    return res.data;
+      return res.data;
+    } catch {
+      throw new Error("Can't sign in");
+    }
   }
 }
+
+export const authService = new AuthService();

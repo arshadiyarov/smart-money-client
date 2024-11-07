@@ -1,10 +1,10 @@
 export interface AuthResponse {
   message: string;
-  token: string;
+  token: string | null;
 }
 
 export interface SignUpPayload {
-  username: string;
+  email: string;
   firstName: string;
   lastName: string;
   password: string;
@@ -12,6 +12,6 @@ export interface SignUpPayload {
 }
 
 export interface SignInPayload {
-  username: string;
+  email: string;
   password: string;
 }

@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/utils";
 import { Montserrat } from "next/font/google";
 import { cookies } from "next/headers";
 import { axiosClient } from "@/shared/api/axios";
+import { Toaster } from "sonner";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -26,7 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(montserrat.className, "antialiased")}>
-        <main>{children}</main>
+        <Toaster position="top-right" closeButton richColors />
+        {children}
       </body>
     </html>
   );
