@@ -23,6 +23,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/shared/ui/shadcn/input-otp";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 const signUpSchema = z
   .object({
@@ -187,11 +188,12 @@ export const SignUpForm = () => {
               control={form.control}
               name={"verificationCode"}
               render={({ field }) => (
-                <FormItem className="w-full relative">
+                <FormItem className="w-full relative flex justify-center">
                   <FormMessage className="absolute bottom-1 left-6" />
                   <FormControl>
                     <InputOTP
                       maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
                       value={field.value}
                       onChange={(value) => field.onChange(value)}
                     >
@@ -208,14 +210,20 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              variant="outline"
-              size="xl"
-              className="font-semibold"
-            >
-              {isLoading ? <Loader className="text-2xl" /> : "Confirm"}
-            </Button>
+            <div className="flex items-center gap-10">
+              <Button
+                type="button"
+                variant="outline"
+                size="xl"
+                className="font-semibold"
+                onClick={() => setStep(1)}
+              >
+                Back
+              </Button>
+              <Button type="submit" size="xl" className="font-semibold">
+                {isLoading ? <Loader className="text-2xl" /> : "Confirm"}
+              </Button>
+            </div>
           </>
         )}
       </form>
