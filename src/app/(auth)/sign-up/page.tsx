@@ -6,9 +6,9 @@ import { SignUpForm } from "@/widget/sign-up/SignUpForm";
 
 const SignUpPage = () => {
   return (
-    <div className="bg-secondary-background min-h-screen">
+    <div className="bg-light-blue min-h-screen">
       <Container>
-        <div className="flex justify-between py-20 h-screen">
+        <div className="flex justify-between py-10 h-screen">
           <div className="w-1/2 text-white font-semibold space-y-3 hidden lg:block">
             <h1 className="text-5xl text-pretty">
               Welcome!
@@ -20,7 +20,7 @@ const SignUpPage = () => {
               SmartMoney
             </h2>
           </div>
-          <Card className="flex-1 py-20 px-4 sm:px-7 md:px-14 flex flex-col items-center justify-between gap-20">
+          <Card className="flex-1 py-20 px-4 sm:px-7 md:px-14 flex flex-col items-center justify-between gap-20 overflow-y-scroll">
             <Logo className="mx-auto" />
             <div className="w-full">
               <SignUpForm />

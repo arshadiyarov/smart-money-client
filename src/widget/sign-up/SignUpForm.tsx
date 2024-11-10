@@ -15,7 +15,7 @@ import { Button } from "@/shared/ui/shadcn/button";
 import { authService } from "@/entities/auth/auth.service";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 import { useState } from "react";
 import { Loader } from "@/shared/ui/Loader";
 import {
@@ -24,6 +24,8 @@ import {
   InputOTPSlot,
 } from "@/shared/ui/shadcn/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { Eye, EyeOff } from "lucide-react";
+import { useMediaQuery } from "@mui/system";
 
 const signUpSchema = z
   .object({
@@ -32,22 +34,27 @@ const signUpSchema = z
     email: z
       .string()
       .min(1, { message: "Email is required" })
-      .email({ message: "Please enter a valid email address to continue" }),
+      .email({ message: "Enter a valid email" }),
     password: z
       .string()
-      .min(8, { message: "Your password must be at least 8 characters long" }),
-    confirmPassword: z
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    confirmPassword: z.string().min(1, { message: "Confirm your password" }),
+    verificationCode: z
       .string()
-      .min(1, { message: "Please confirm your password" }),
-    verificationCode: z.string(),
+      .min(6, { message: "Confirmation code is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
 
+type ShowPasswordType = {
+  password: boolean;
+  confirmPassword: boolean;
+};
+
 export const SignUpForm = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -60,6 +67,15 @@ export const SignUpForm = () => {
       verificationCode: "",
     },
   });
+  const [showPassword, setShowPassword] = useState<ShowPasswordType>({
+    password: false,
+    confirmPassword: false,
+  });
+  const isMobile = useMediaQuery("(min-width: 768px)");
+
+  const handleShowPassword = (key: keyof ShowPasswordType) => {
+    setShowPassword((prevState) => ({ ...prevState, [key]: !prevState[key] }));
+  };
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
@@ -136,40 +152,60 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name={"password"}
-              render={({ field }) => (
-                <FormItem className="w-full relative">
-                  <FormMessage className="absolute bottom-1 left-6" />
-                  <FormControl>
-                    <Input
-                      variant="custom"
-                      type="password"
-                      placeholder="Password"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name={"confirmPassword"}
-              render={({ field }) => (
-                <FormItem className="w-full relative">
-                  <FormMessage className="absolute bottom-1 left-6" />
-                  <FormControl>
-                    <Input
-                      variant="custom"
-                      type="password"
-                      placeholder="Confirm password"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <div className="relative w-full">
+              <FormField
+                control={form.control}
+                name={"password"}
+                render={({ field }) => (
+                  <FormItem className="w-full relative">
+                    <FormMessage className="absolute bottom-1 left-6" />
+                    <FormControl>
+                      <Input
+                        variant="custom"
+                        type={showPassword.password ? "text" : "password"}
+                        placeholder="Password"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <button
+                type="button"
+                onClick={() => handleShowPassword("password")}
+                className="absolute right-5 top-1/2 -translate-y-1/2"
+              >
+                {showPassword.password ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
+            <div className="relative w-full">
+              <FormField
+                control={form.control}
+                name={"confirmPassword"}
+                render={({ field }) => (
+                  <FormItem className="w-full relative">
+                    <FormMessage className="absolute bottom-1 left-6" />
+                    <FormControl>
+                      <Input
+                        variant="custom"
+                        type={
+                          showPassword.confirmPassword ? "text" : "password"
+                        }
+                        placeholder="Confirm password"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <button
+                type="button"
+                onClick={() => handleShowPassword("confirmPassword")}
+                className="absolute right-5 top-1/2 -translate-y-1/2"
+              >
+                {showPassword.confirmPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
             <Button
               type="submit"
               variant="outline"
@@ -189,7 +225,7 @@ export const SignUpForm = () => {
               name={"verificationCode"}
               render={({ field }) => (
                 <FormItem className="w-full relative flex justify-center">
-                  <FormMessage className="absolute bottom-1 left-6" />
+                  <FormMessage className="absolute -top-6 left-1/2 -translate-x-1/2 text-nowrap" />
                   <FormControl>
                     <InputOTP
                       maxLength={6}
@@ -214,13 +250,17 @@ export const SignUpForm = () => {
               <Button
                 type="button"
                 variant="outline"
-                size="xl"
+                size={isMobile ? "xl" : "default"}
                 className="font-semibold"
                 onClick={() => setStep(1)}
               >
                 Back
               </Button>
-              <Button type="submit" size="xl" className="font-semibold">
+              <Button
+                type="submit"
+                size={isMobile ? "xl" : "default"}
+                className="font-semibold"
+              >
                 {isLoading ? <Loader className="text-2xl" /> : "Confirm"}
               </Button>
             </div>

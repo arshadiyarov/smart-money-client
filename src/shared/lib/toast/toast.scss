@@ -1,0 +1,61 @@
+/* stylelint-disable selector-class-pattern */
+@import "react-toastify/dist/ReactToastify.css";
+
+$error-color: #f03;
+$success-color: #10b981;
+$warning-color: #e86e30;
+$info-color: #17A2B8;
+
+.Toastify {
+  &__toast-container {
+    width: 20rem;
+  }
+
+  &__close-button {
+    color: #000 !important;
+  }
+
+  &__progress-bar {
+    &--wrp {
+      background: #fff;
+    }
+
+    &--info {
+      background-color: $info-color !important;
+    }
+
+    &--error {
+      background-color: $error-color !important;
+    }
+
+    &--success {
+      background-color: $success-color !important;
+    }
+
+    &--warning {
+      background-color: $warning-color !important;
+    }
+  }
+
+  &__toast {
+    &-theme--colored {
+      background: #fff !important;
+    }
+
+    &--info {
+      color: $info-color !important;
+    }
+
+    &--error {
+      color: $error-color !important;
+    }
+
+    &--success {
+      color: $success-color !important;
+    }
+
+    &--warning {
+      color: $warning-color !important;
+    }
+  }
+}

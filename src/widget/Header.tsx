@@ -6,6 +6,7 @@ import { Logo } from "@/shared/ui/Logo";
 import { Button } from "@/shared/ui/shadcn/button";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export const Header = () => {
   const token = Cookies.get("token");
@@ -14,6 +15,7 @@ export const Header = () => {
   const handleLogout = async () => {
     Cookies.remove("token");
     // TODO server side token and not from here
+    toast.info("Logged out");
     router.push("/sign-in");
   };
 
@@ -24,20 +26,22 @@ export const Header = () => {
           <Link href="/public">
             <Logo />
           </Link>
-          {token ? (
-            <Button onClick={handleLogout} asChild>
-              <Link href="/sign-in">Logout</Link>
-            </Button>
-          ) : (
-            <div className="flex items-center gap-3">
-              <Button variant="outline" asChild>
-                <Link href="/sign-in">Login</Link>
+          <div className="flex items-center gap-3">
+            {token ? (
+              <Button onClick={handleLogout} asChild>
+                <Link href="/sign-in">Logout</Link>
               </Button>
-              <Button asChild>
-                <Link href="/sign-up">Register</Link>
-              </Button>
-            </div>
-          )}
+            ) : (
+              <>
+                <Button variant="outline" asChild>
+                  <Link href="/sign-in">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/sign-up">Register</Link>
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </Container>
     </header>

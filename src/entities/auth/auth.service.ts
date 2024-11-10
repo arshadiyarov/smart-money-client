@@ -1,6 +1,8 @@
 import { axiosClient } from "@/shared/api/axios";
 import {
   AuthResponse,
+  ForgotPasswordPayload,
+  ForgotPasswordResponse,
   SignInPayload,
   SignUpPayload,
 } from "@/entities/auth/auth";
@@ -29,6 +31,19 @@ class AuthService {
       return res.data;
     } catch {
       throw new Error("Can't sign in");
+    }
+  }
+
+  async forgotPassword({ ...payload }: ForgotPasswordPayload) {
+    try {
+      const res = await axiosClient.post<ForgotPasswordResponse>(
+        "/auth/forgot-password",
+        payload,
+      );
+
+      return res.data;
+    } catch {
+      throw new Error("Error while resetting password");
     }
   }
 }

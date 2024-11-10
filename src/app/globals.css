@@ -6,6 +6,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -39,7 +57,10 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --secondary-background: 188, 42%, 67%;
+    --dark-blue: 210, 56%, 9%;
+    --light-blue: 190, 41%, 67%;
+    --light-purple: 265, 75%, 85%;
+    --light-gray: 0, 0%, 95%;
   }
   .dark {
     --background: 0 0% 3.9%;

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const SignInPage = () => {
   return (
-    <div className="bg-secondary-background min-h-screen">
+    <div className="bg-light-blue min-h-screen">
       <Container>
         <div className="flex justify-between py-20 h-screen">
           <div className="w-1/2 text-white font-semibold space-y-3 hidden lg:block">

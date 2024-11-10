@@ -3,6 +3,11 @@ export interface AuthResponse {
   token: string | null;
 }
 
+export interface ForgotPasswordResponse {
+  first: string;
+  second: number;
+}
+
 export interface SignUpPayload {
   email: string;
   firstName: string;
@@ -14,4 +19,10 @@ export interface SignUpPayload {
 export interface SignInPayload {
   email: string;
   password: string;
+}
+
+export interface ForgotPasswordPayload {
+  email: string;
+  password: string;
+  verificationCode: string;
 }
