@@ -21,7 +21,7 @@ class CoinService {
   ) {
     try {
       const res = await axiosClient.get<CoinType>(
-        `/crypto/current-prices?page=${page.toString()}&size=${size.toString()}&filter=${filter}`,
+        `/crypto/current-prices?page=${page}&size=${size}&filter=${filter}`,
       );
 
       return res.data;

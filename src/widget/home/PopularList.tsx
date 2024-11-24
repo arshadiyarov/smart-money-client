@@ -82,6 +82,7 @@ export const PopularList = () => {
                       "text-red-500": coin.priceChangePercent < 0,
                     })}
                   >
+                    {coin.priceChangePercent > 0 && "+"}
                     {coin.priceChangePercent}%
                   </span>
                 </TableCell>

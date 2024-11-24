@@ -7,6 +7,7 @@ import { axiosClient } from "@/shared/api/axios";
 import Toast from "@/shared/lib/toast/toast";
 import { ProgressBar } from "@/shared/lib/ProgressBar";
 import QueryProvider from "@/core/providers/query/QueryProvider";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 const kronaOne = Krona_One({
@@ -34,13 +35,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryProvider>
-        <body
-          className={cn(montserrat.className, kronaOne.variable, "antialiased")}
-        >
-          <Toast />
-          <ProgressBar />
-          {children}
-        </body>
+        <TooltipProvider>
+          <body
+            className={cn(
+              montserrat.className,
+              kronaOne.variable,
+              "antialiased",
+            )}
+          >
+            <Toast />
+            <ProgressBar />
+            {children}
+          </body>
+        </TooltipProvider>
       </QueryProvider>
     </html>
   );
