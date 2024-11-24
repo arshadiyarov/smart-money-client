@@ -5,6 +5,9 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        kronaOne: ["var(--font-kronaOne)"],
+      },
       keyframes: {
         "caret-blink": {
           "0%,70%,100%": { opacity: "1" },

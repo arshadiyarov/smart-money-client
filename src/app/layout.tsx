@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/shared/lib/utils";
-import { Montserrat } from "next/font/google";
+import { Krona_One, Montserrat } from "next/font/google";
 import { cookies } from "next/headers";
 import { axiosClient } from "@/shared/api/axios";
 import Toast from "@/shared/lib/toast/toast";
 import { ProgressBar } from "@/shared/lib/ProgressBar";
+import QueryProvider from "@/core/providers/query/QueryProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
+const kronaOne = Krona_One({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-kronaOne",
+});
 
 export const metadata: Metadata = {
   title: "Smart Money - Smart Investment",
@@ -27,11 +33,15 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={cn(montserrat.className, "antialiased")}>
-        <Toast />
-        <ProgressBar />
-        {children}
-      </body>
+      <QueryProvider>
+        <body
+          className={cn(montserrat.className, kronaOne.variable, "antialiased")}
+        >
+          <Toast />
+          <ProgressBar />
+          {children}
+        </body>
+      </QueryProvider>
     </html>
   );
 }

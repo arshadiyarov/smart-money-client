@@ -54,7 +54,7 @@ type ShowPasswordType = {
 };
 
 export const SignUpForm = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof signUpSchema>>({
